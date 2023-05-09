@@ -1,0 +1,17 @@
+LICENCE
+MANIFEST.in
+README.md
+setup.cfg
+setup.py
+src/Markdown2docx.py
+src/PreprocessMarkdown2docx.py
+src/Markdown2docx.egg-info/PKG-INFO
+src/Markdown2docx.egg-info/SOURCES.txt
+src/Markdown2docx.egg-info/dependency_links.txt
+src/Markdown2docx.egg-info/requires.txt
+src/Markdown2docx.egg-info/top_level.txt
+src/markdown2docx.egg-info/PKG-INFO
+src/markdown2docx.egg-info/SOURCES.txt
+src/markdown2docx.egg-info/dependency_links.txt
+src/markdown2docx.egg-info/requires.txt
+src/markdown2docx.egg-info/top_level.txt

@@ -1,0 +1,6 @@
+include hello.md
+include hello.png
+include hello.py
+include sampleMacro.sh
+include lenna.png
+include macros.png
