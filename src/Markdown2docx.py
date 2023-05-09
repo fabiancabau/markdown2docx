@@ -258,10 +258,7 @@ class Markdown2docx:
         self.file_stream = file_stream
         self.page_width_inches = find_page_width(self.doc)
         # self.html = markdown.markdown(_read_in_markdown(self.infile), extensions=['tables'])
-        if isinstance(markdown, list):
-            self.markdown = '\n'.join(markdown)
-        else:
-            self.markdown = _read_in_markdown(self.infile)
+        self.markdown = markdown
         self.html = markdown2.markdown(self.markdown, extras=[
             'fenced-code-blocks',
             'code-friendly',
@@ -326,7 +323,7 @@ def __main__(project):
     # project = Markdown2docx('hello')
     project = Markdown2docx(project, markdown)
     project.eat_soup()
-    project.write_html()  # optional
+    # project.write_html()  # optional
     # print(type(project.styles()))
     # for k, v in project.styles().items():
     #     print(f'stylename: {k} = {v}')
