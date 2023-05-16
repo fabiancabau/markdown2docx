@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='Markdown2docx',
-    version='0.2.2',
+    version='0.2.3',
     description='Convert Markdown to docx with token substitution and command output substitution',
     long_description = long_description,
     long_description_content_type="text/markdown",

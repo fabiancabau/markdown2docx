@@ -134,7 +134,12 @@ def do_paragraph(line,
         doc.add_picture(image_source,
                         width=docx.shared.Inches(chosen_width))
         return
-    doc.add_paragraph(line.text.strip(), style=style_body)
+    paragraph = doc.add_paragraph(line.text.strip(), style=style_body)
+    paragraph.style.font.name = 'Calibri'
+    paragraph.style.font.size = Pt(11)
+    paragraph_format = paragraph.paragraph_format
+    paragraph_format.space_before = Pt(6)
+    paragraph_format.space_after = Pt(6)
 
 
 def do_pre_code(line, doc, style_quote_table):
@@ -161,6 +166,7 @@ def _eat_soup(soup,
               style_quote_table,
               style_body,
               style_table,
+              heading_style,
               table_of_contents_string='contents'):
     """HTML from markdown has been converted to a beautiful soup (bs4) object.
     Process the object to render a Word docx."""
@@ -183,19 +189,23 @@ def _eat_soup(soup,
                 do_fake_horizontal_rule(doc)
                 continue
             if line.name == 'h1':
-                doc.add_heading(line, 0)
+                heading = doc.add_heading(line, 0)
+                heading.style = heading_style
                 continue
             if line.name == 'h2':
-                doc.add_heading(line, 1)
+                heading = doc.add_heading(line, 1)
+                heading.style = heading_style
                 continue
             if line.name == 'h3':
-                doc.add_heading(line, 2)
+                heading = doc.add_heading(line, 2)
+                heading.style = heading_style
                 continue
             if line.name == 'h4':
-                doc.add_heading(line, 3)
+                heading = doc.add_heading(line, 3)
+                heading.style = heading_style
                 continue
             if line.name == 'p':
-                do_paragraph(line, doc, page_width_inches, style_body)
+                paragraph = do_paragraph(line, doc, page_width_inches, style_body)
                 continue
             if line.name == 'pre':
                 do_pre_code(line, doc, style_quote_table)
@@ -289,6 +299,7 @@ class Markdown2docx:
                   self.style_quote_table,
                   self.style_body,
                   self.style_table,
+                  self.heading_style,
                   table_of_contents_string=self.toc_indicator)
 
     def __del__(self):
