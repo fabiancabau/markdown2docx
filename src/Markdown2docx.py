@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import errno
 import docx
-from docx.shared import Pt
+from docx.enum.style import WD_STYLE_TYPE
+from docx.shared import Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 import markdown2
 from bs4 import BeautifulSoup
@@ -146,7 +147,7 @@ def do_pre_code(line, doc, style_quote_table):
     run = run_obj[0]
     font = run.font
     font.size = Pt(10)
-    font.name = 'Courier'
+    font.name = 'Verdana'
 
 
 def do_fake_horizontal_rule(doc, length_of_line=80, c='_'):
@@ -249,12 +250,24 @@ class Markdown2docx:
     style_quote_table = 'Table Grid'
     toc_indicator = 'contents'
 
+
+
     def __init__(self, project, markdown=None, file_stream=None):
         self.infile = '.'.join([project, 'md'])
         self.outfile = '.'.join([project, 'docx'])
         self.html_out_file = '.'.join([project, 'html'])
         self.project = project
         self.doc = docx.Document()
+
+        self.heading_style = self.doc.styles.add_style('Custom Heading', WD_STYLE_TYPE.PARAGRAPH)
+        self.heading_style.base_style = self.doc.styles['Heading 2']
+        self.heading_style.font.color.rgb = RGBColor(0, 0, 0)
+        self.heading_style.font.size = Pt(18)
+        self.heading_style.font.name = 'Verdana'
+        self.heading_style.paragraph_format.space_before = Pt(12)
+        self.heading_style.paragraph_format.space_after = Pt(6)
+
+
         self.file_stream = file_stream
         self.page_width_inches = find_page_width(self.doc)
         # self.html = markdown.markdown(_read_in_markdown(self.infile), extensions=['tables'])
@@ -265,6 +278,7 @@ class Markdown2docx:
             'wiki-tables',
             'tables'
         ])
+
         self.soup = BeautifulSoup(self.html, 'html.parser')
         # return self.soup
 
